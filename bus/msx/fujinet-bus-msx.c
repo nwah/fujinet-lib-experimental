@@ -5,13 +5,14 @@
 #include "portio.h"
 #include <string.h>
 
+#ifdef MSX_DEBUG
 #define COLUMNS 16
 
 void hexdump(uint8_t *buffer, int count)
 {
   int outer, inner;
   uint8_t c;
-
+return;
 
   for (outer = 0; outer < count; outer += COLUMNS) {
     for (inner = 0; inner < COLUMNS; inner++) {
@@ -35,6 +36,7 @@ void hexdump(uint8_t *buffer, int count)
 
   return;
 }
+#endif // MSX_DEBUG
 
 
 #define milliseconds_to_jiffy(millis) ((millis) / (VDP_IS_PAL ? 20 : 1000 / 60))
@@ -90,7 +92,9 @@ uint16_t fuji_slip_encode()
       esc_count++;
   }
 
+#ifdef MSX_DEBUG
   printf("ESC count: %d %d\n", esc_count, len);
+#endif // MSX_DEBUG
   if (esc_count) {
     // Encode buffer in place working from back to front
     for (idx = len - 1, enc_idx = 1 + len + esc_count; idx; idx--, enc_idx--) {
@@ -163,15 +167,19 @@ bool fuji_bus_call(uint8_t device, uint8_t fuji_cmd, uint8_t fields,
 
 
   fb_packet = (fujibus_packet *) (fb_buffer + 1); // +1 for SLIP_END
+#ifdef MSX_DEBUG
   printf("buf: 0x%04x pak: 0x%04x\n", fb_buffer, fb_packet);
   printf("fields: %d\n", fields);
+#endif // MSX_DEBUG
   fb_packet->header.device = device;
   fb_packet->header.command = fuji_cmd;
   fb_packet->header.length = sizeof(fujibus_header);
   fb_packet->header.checksum = 0;
   fb_packet->header.fields = fields;
+#ifdef MSX_DEBUG
   printf("Header len %d %d\n", fb_packet->header.length, sizeof(fujibus_header));
   hexdump((uint8_t *) fb_packet, sizeof(fujibus_header));
+#endif // MSX_DEBUG
 
   idx = 0;
   numbytes = fuji_field_numbytes(fields);
@@ -195,19 +203,27 @@ bool fuji_bus_call(uint8_t device, uint8_t fuji_cmd, uint8_t fields,
     memcpy(&fb_packet->data[idx], data, data_length);
     idx += data_length;
   }
+#ifdef MSX_DEBUG
   printf("Fields + data %d %d\n", numbytes, idx);
+#endif // MSX_DEBUG
 
   fb_packet->header.length += idx;
+#ifdef MSX_DEBUG
   printf("Packet len %d\n", fb_packet->header.length);
+#endif // MSX_DEBUG
 
   ck1 = fuji_calc_checksum(fb_packet, fb_packet->header.length);
+#ifdef MSX_DEBUG
   printf("Checksum: 0x%02x\n", ck1);
+#endif // MSX_DEBUG
   fb_packet->header.checksum = ck1;
 
   numbytes = fuji_slip_encode();
 
+#ifdef MSX_DEBUG
   printf("Sending packet %d\n", numbytes);
   hexdump(fb_buffer, numbytes);
+#endif // MSX_DEBUG
   port_putbuf(fb_buffer, numbytes);
 #if 1
   code = port_discard_until(SLIP_END, TIMEOUT_SLOW);
@@ -217,17 +233,23 @@ bool fuji_bus_call(uint8_t device, uint8_t fuji_cmd, uint8_t fields,
   } while (code > 0 && code != SLIP_END);
 #endif // 0
   if (code != SLIP_END) {
+#ifdef MSX_DEBUG
     printf("NO SLIP FRAME %d\n", code);
+#endif // MSX_DEBUG
     return false;
   }
 
   rlen = port_get_until(fb_packet, (fb_buffer + sizeof(fb_buffer)) - ((uint8_t *) fb_packet),
                  SLIP_END, TIMEOUT_SLOW);
+#ifdef MSX_DEBUG
   printf("Packet reply: %d\n", rlen);
   hexdump(fb_packet, sizeof(fujibus_header));
+#endif // MSX_DEBUG
   rlen = fuji_slip_decode(rlen);
+#ifdef MSX_DEBUG
   printf("Decode len: %d %d\n", rlen, fb_packet->header.length);
   hexdump(fb_packet, sizeof(fujibus_header));
+#endif // MSX_DEBUG
   if (rlen != fb_packet->header.length)
     return false;
   if (rlen - sizeof(fujibus_header) != reply_length)
