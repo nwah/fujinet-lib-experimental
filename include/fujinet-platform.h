@@ -19,6 +19,8 @@
 #define FUJI_PLATFORM_ADAM
 #elif defined(__TRS80M2__)
 #define FUJI_PLATFORM_MODEL2
+#elif defined(__palmos__)
+#define FUJI_PLATFORM_PALMOS
 #else
 #error "Building on unknown platform"
 #endif
