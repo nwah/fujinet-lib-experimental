@@ -193,12 +193,10 @@ static void palmos_fixup_data(uint8_t device, uint8_t cmd, uint8_t *buf, uint16_
 static uint8_t palmos_data_staging[FN_MAX_DATA];
 
 /* The exact reply payload length of the last fuji_bus_call(), as reported
- * by fn_bus_call() itself (not a fixed block size). Unlike msdos/msx, which
- * have to send a self-describing length header inside FUJICMD_READ_APPKEY's
- * reply payload because their transports don't expose one, FujiBus always
- * knows the true reply length, so bus/palmos/appkey.c uses this instead of
- * that convention. Mirrors the (undeclared, file-local-by-convention)
- * global of the same name in bus/msdos/fujinet-bus-msdos.c. */
+ * by fn_bus_call() itself (not a fixed block size). bus/palmos/appkey.c
+ * uses it to bound the length header in FUJICMD_READ_APPKEY's reply.
+ * Mirrors the (undeclared, file-local-by-convention) global of the same
+ * name in bus/msdos/fujinet-bus-msdos.c. */
 uint16_t fuji_bus_call_rlen;
 
 bool fuji_bus_call(uint8_t device, uint8_t fuji_cmd, uint8_t fields,

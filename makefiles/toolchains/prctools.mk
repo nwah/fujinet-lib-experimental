@@ -40,8 +40,12 @@ define link-bin
   $(CC) $(CFLAGS) -o $1 $2 $(LIBS)
 endef
 
+# gcc 2.95 writes -MMD output to ./<basename>.d with a bare "<basename>.o:"
+# target, so move it next to the object and fix the target
 define compile
-  $(CC) $(CFLAGS) -MMD -c -o $1 $2
+  $(CC) $(CFLAGS) -MMD -c -o $1 $2 && \
+    sed 's|^[^:]*:|$1:|' $(basename $(notdir $2)).d > $(1:.o=.d) && \
+    rm -f $(basename $(notdir $2)).d
 endef
 
 define assemble
