@@ -183,6 +183,16 @@ extern int16_t network_json_query_adam(const char *devicespec, const char *query
 #define network_json_query(devspec, query, buffer) network_json_query_adam(devspec, query, buffer)
 #else /* ! (__ADAM__ || __COLECOADAM__) */
 int16_t network_json_query(const char *devicespec, const char *query, char *buffer);
+
+/**
+ * @brief  Perform JSON query into a buffer of known size
+ * @param  buflen size of buffer: at most buflen - 1 bytes are stored, then a nul;
+ *         the rest of a longer value is read and discarded
+ * @return Bytes stored, or negative values represent fujinet-network error code (See FN_ERR_* values)
+ *
+ * As network_json_query, for values that may not fit (free text).
+ */
+int16_t network_json_query_n(const char *devicespec, const char *query, char *buffer, uint16_t buflen);
 #endif /* __ADAM__ || __COLECOADAM__ */
 
 /**
