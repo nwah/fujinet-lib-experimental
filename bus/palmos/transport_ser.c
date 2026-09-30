@@ -1,4 +1,4 @@
-/* Vendored from palmos-rs232 palm/transport_ser.c; keep in sync. */
+/* Vendored from fujinet-palm (github.com/nwah/fujinet-palm) palm/transport_ser.c; keep in sync. */
 /* palm/transport_ser.c
  *
  * See transport_ser.h for the design. Nothing here touches globals: every

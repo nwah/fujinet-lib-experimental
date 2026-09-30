@@ -1,4 +1,4 @@
-/* Vendored from palmos-rs232 core/fujibus.h; keep in sync. */
+/* Vendored from fujinet-palm (github.com/nwah/fujinet-palm) core/fujibus.h; keep in sync. */
 #ifndef FUJIBUS_H
 #define FUJIBUS_H
 

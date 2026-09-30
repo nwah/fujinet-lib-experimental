@@ -1,4 +1,4 @@
-/* Vendored from palmos-rs232 core/fn_types.h; keep in sync. */
+/* Vendored from fujinet-palm (github.com/nwah/fujinet-palm) core/fn_types.h; keep in sync. */
 #ifndef FN_TYPES_H
 #define FN_TYPES_H
 

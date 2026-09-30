@@ -1,4 +1,4 @@
-/* Vendored from palmos-rs232 core/fujibus.c; keep in sync. */
+/* Vendored from fujinet-palm (github.com/nwah/fujinet-palm) core/fujibus.c; keep in sync. */
 /*
  * fujibus.c -- FujiBus core wire protocol: SLIP framing, checksum, request
  * encoding and the fn_bus_call() request/reply transaction primitive.

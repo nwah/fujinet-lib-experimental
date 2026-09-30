@@ -1,4 +1,4 @@
-/* Vendored from palmos-rs232 palm/transport_ser.h; keep in sync. */
+/* Vendored from fujinet-palm (github.com/nwah/fujinet-palm) palm/transport_ser.h; keep in sync. */
 /* palm/transport_ser.h
  *
  * FnTransport binding onto the Palm OS *old* Serial Manager (Ser* API,

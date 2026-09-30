@@ -1,4 +1,4 @@
-/* Vendored from palmos-rs232 core/fn_transport.h; keep in sync. */
+/* Vendored from fujinet-palm (github.com/nwah/fujinet-palm) core/fn_transport.h; keep in sync. */
 #ifndef FN_TRANSPORT_H
 #define FN_TRANSPORT_H
 

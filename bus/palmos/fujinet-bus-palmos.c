@@ -1,7 +1,7 @@
 /* bus/palmos/fujinet-bus-palmos.c
  *
  * fuji_bus_call/network_bus_read/network_bus_write for Palm OS, built on top
- * of the portable FujiBus client (fujibus.c, vendored from palmos-rs232).
+ * of the portable FujiBus client (fujibus.c, vendored from fujinet-palm).
  *
  * Deliberately portable: this file must NOT include any Palm OS header, so
  * it can also be compiled (and its endian fix-up table unit tested) on a
@@ -95,7 +95,7 @@ static const PalmosSwapField palmos_swap_table[] = {
 #define PALMOS_SWAP_TABLE_LEN (sizeof(palmos_swap_table) / sizeof(palmos_swap_table[0]))
 
 /* Decodes `width` little-endian wire bytes at p into a native uint32_t.
- * Not static: palmos-rs232/host/fnlib_host.c unit tests its value semantics
+ * Not static: fujinet-palm's host/fnlib_host.c unit tests its value semantics
  * directly (see that file), since a whole-buffer round trip through
  * fuji_bus_call can't distinguish "no swap needed" from "swap works" on a
  * little-endian host. */
