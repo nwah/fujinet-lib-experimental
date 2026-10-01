@@ -15,7 +15,7 @@ void fuji_palmos_close(void);   /* apps MUST call this in AppStop so HotSync etc
 bool fuji_palmos_is_open(void);
 uint16_t fuji_palmos_last_error(void); /* last FnErr or Palm Err, for diagnostics */
 
-#define FUJI_PALMOS_PREF_CREATOR 'FjNt'
+#define FUJI_PALMOS_PREF_CREATOR 'FNCF'
 #define FUJI_PALMOS_PREF_ID 0
 #define FUJI_PALMOS_PREF_VERSION 1
 
